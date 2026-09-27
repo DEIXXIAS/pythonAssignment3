@@ -1,50 +1,39 @@
-import math
-binaryList = []
-hexaList = []
+# initializing my list that I will use to append any remainder to
+hexaList =[]
 
-def calculateLoop(quotient, remainder):
-    while quotientChecker == True:
-        concatenation(hexaList, int(quotient), int(remainder))
-        quotient = quotient / 16
-        remainder = quotient * 16
-        print("The quotient and remainder are :", quotient, remainder)
-        if quotient <= 0:
-            quotientChecker == False
-            concatenation(hexaList, int(quotient), int(remainder))
-    else:
-        concatenation(hexaList, " ", " ")
+def calculations(userInput): # where I will calculate the userInput 
+    if userInput == 0: # if the users input reaches zero, meaning that the quotient is 0
+        return "" # it will return empty
+    else: # otherwise we will run both the calculations for the quotient and then append it to the hexalist
+        calculations(userInput // 16) 
+        hexaCalculations(userInput % 16, hexaList) 
 
 
 
-def concatenation(hexaList, quotient, remainder):
-  while quotient != " ":
-    quotientPlaceholder = str(quotient)
-    remainderPlaceholder = str(remainder)
-    hexaList =  quotientPlaceholder +"R"+ remainderPlaceholder
-    return hexaList
-  else:
-    hexaList = " "
-    return hexaList
-
-def hexadecimaList(hexaList):
-    index = int(0)
-    hexaList.reverse()
-    while index <= hexaList:
-        print(hexaList)
-
-
-
+def hexaCalculations(remainder, hexaList): # when the quotient is not zero and we have a remainder
+    if remainder <= 9: # if the remainder falls between 0-9
+       hexaList.append(str(remainder)) # we will append it to the hexa list as a str
+    elif remainder == 10: # if it is greater than 10-15, it will be given a letter between A-F
+        hexaList.append("A")
+    elif remainder == 11:
+        hexaList.append("B")
+    elif remainder == 12:
+        hexaList.append("C")
+    elif remainder == 13:
+        hexaList.append("D")
+    elif remainder == 14:
+        hexaList.append("E")
+    elif remainder == 15:
+        hexaList.append("F")
+    else: #if it happens to not fall outside this range, append it as a str
+        hexaList.append(str(remainder))
 
 
 # ----------------- MAIN FUNCTION ------------------
-quotient = float()
-remainder = int()
-quotientChecker = True
-
-numSelect = int(input("\nEnter a whole number to find the hexadecimal: "))
-quotient = numSelect / 16
-print(quotient)
-remainder = numSelect % 16
-print(remainder)
-calculateLoop(int(quotient), remainder)
-#hexadecimaList(hexaList)
+# asking the user what number they want to find as the hexadecimal 
+userInput = int(input("Enter a whole number to find the hexadecimal value: "))
+if userInput == 0: # if the user inputs a number equal to zero
+    print("0") #return zero
+else: # otherwise run the calculations and then print the joined hexalist once it is finished with calculations
+    calculations(userInput)
+    print("".join(hexaList))
